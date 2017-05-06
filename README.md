@@ -19,3 +19,8 @@ Install Gems
 Run server
 
 `bundle exec rackup`
+
+
+## Run the tests
+
+`rake spec`
