@@ -3,13 +3,8 @@ An api that provides a snapshot of ethereum accounts
 
 ## Build & Run
 ### With Docker
-Build docker image
 
-`docker build -t ethereum-snapshot .`
-
-Run container
-
-`docker run -ti --rm -p 9292:9292 -v $(pwd):/usr/src/app ethereum-snapshot`
+`docker-compose up`
 
 Generate new Gemfile.lock:
 
@@ -29,4 +24,10 @@ Run server
 
 ## Run the tests
 
+### With Docker
+
+`docker-compose -f docker-compose.test.yml run web`
+
+### Without Docker
 `rake spec`
+

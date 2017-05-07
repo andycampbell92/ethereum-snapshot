@@ -1,0 +1,12 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "9292:9292"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - RACK_ENV=development
+      - DATABASE_URL=sqlite://development.db
+    command: bash -c "bundle exec rake db_up && bundle exec rackup --host 0.0.0.0"

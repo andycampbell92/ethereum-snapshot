@@ -1,0 +1,12 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "9292:9292"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - RACK_ENV=test
+      - DATABASE_URL=sqlite://test.db
+    command: bash -c "bundle exec rake db_bounce && bundle exec rake spec"
