@@ -3,6 +3,7 @@ gem 'roda', '~> 2.25.0'
 gem 'sqlite3'
 gem 'sequel'
 gem 'rack-unreloader'
+gem 'oj'
 
 group :test do
   gem 'rack-test', '~> 0.6.3'
