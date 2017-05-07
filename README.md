@@ -18,6 +18,10 @@ To update a cached balance run
 
 `curl --data '' http://localhost:9292/accounts/0x8eeec35015baba2890e714e052dfbe73f4b752f9`
 
+To get all the balances in the cache run
+
+`curl http://localhost:9292/accounts`
+
 When a new gem is added to the gemfile we need to generate a new Gemfile.lock to copy to our container
 
 `docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.4.1 bundle install`
