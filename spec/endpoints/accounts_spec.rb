@@ -28,7 +28,7 @@ describe 'The accounts endpoint' do
 
   it "responds with a list of all accounts in the database" do
     get "/accounts"
-    Oj.load(last_response.body).to eq @seeded_accounts
+    expect(Oj.load(last_response.body)).to eq @seeded_accounts
   end
 
   it "responds with ok when /accounts/:address posted with valid address" do
