@@ -10,8 +10,6 @@ migrate = lambda do |env, version|
   require 'logger'
   Sequel.extension :migration
   DB.loggers << Logger.new($stdout)
-  puts 'version'
-  puts version
   Sequel::Migrator.apply(DB, 'migrate', version)
 end
 
