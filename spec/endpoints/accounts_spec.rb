@@ -44,7 +44,7 @@ describe "/accounts endpoint" do
     it "responds with corresponding account when provided with address" do
       to_get = @seeded_accounts[1]
       get "/accounts/#{to_get['address']}"
-      expect(last_response.body).to eq to_get
+      expect(Oj.load(last_response.body)).to eq to_get
     end
 
     it "responds with not_found when non existent address provided" do
@@ -54,13 +54,18 @@ describe "/accounts endpoint" do
 
     it "responds with sensible message when non existent address provided" do
       get "/accounts/0x111111111111111111115abb99faa1867706ea9c"
-      expect(Oj.load(last_response.body['message'])).to eq "an account with that address was not found in cache"
+      expect(Oj.load(last_response.body)['message']).to eq "An account with that address was not found in cache"
+    end
+
+    it "responds with sensible message when invalid address provided" do
+      get "/accounts/0x111111111111111111115abb99faa1867706ea9r"
+      expect(Oj.load(last_response.body)['message']).to eq "The address provided was invalid"
     end
 
     it "responds with ok to /accounts/:address get with valid address without prefix" do
       to_get = @seeded_accounts[2]
       get "/accounts/#{to_get['address'][2..-1]}"
-      expect(last_response.body).to eq to_get
+      expect(Oj.load(last_response.body)).to eq to_get
     end
   end
 
