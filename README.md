@@ -3,6 +3,7 @@ An api that provides a snapshot of ethereum accounts
 
 ## Requirements
 `Docker
+
 Docker Compose`
 
 ## Build & Run
@@ -23,6 +24,7 @@ When a new gem is added to the gemfile we need to generate a new Gemfile.lock to
 
 To rebuild our container use
 
+`docker-compose build`
 
 ## Run the tests
 
