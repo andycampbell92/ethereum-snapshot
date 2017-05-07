@@ -1,6 +1,7 @@
 require_relative "models"
 require "roda"
 require "oj"
+require "rest-client"
 
 
 class EthereumSnapshot < Roda
@@ -34,7 +35,32 @@ class EthereumSnapshot < Roda
         end
 
         r.post do
-          "post accounts"
+          validated_address = Account.validate_address(address)
+          if validated_address.nil?
+            response.status = 400
+            {"message" => "The address provided was invalid"}
+          else
+            begin
+              ether_data = RestClient::Request.execute(:method => :get, :url => "https://etherchain.org/api/account/#{validated_address}", :timeout => 60)
+              account_data = Oj.load(ether_data.body)
+              if account_data['data'].empty?
+                 response.status = 404
+                 {"message" => "There was no data associated with the account provided"}
+              else
+                balance = account_data['data'][0]['balance']
+                account = Account.find_or_create(address: validated_address)
+                account.balance = balance
+                account.save
+                {"message" => "cache updated"}
+              end
+            rescue RestClient::ExceptionWithResponse => e
+              response.status = 400
+              {"message" => "There was a problem with your request"}
+            rescue Exception => e
+              response.status = 403
+              {"message" => "There was a problem connecting to etherchain please try again later"}
+            end
+          end
         end
 
       end

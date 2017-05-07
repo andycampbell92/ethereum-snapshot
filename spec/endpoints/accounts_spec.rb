@@ -70,14 +70,19 @@ describe "/accounts endpoint" do
   end
 
   describe "post /accounts/:address" do
-    it "responds with ok when /accounts/:address posted with valid address" do
+    it "responds with ok when provided with valid address" do
       post "/accounts/0x2b9c4e2ad6f1e7bd43365abb99faa1867706ea9c"
       expect(last_response.ok?).to be true
     end
 
-    it "responds with ok when /accounts/:address posted with valid address without prefix" do
+    it "responds with ok when provided with valid address without prefix" do
       post "/accounts/2b9c4e2ad6f1e7bd43365abb99faa1867706ea9c"
       expect(last_response.ok?).to be true
+    end
+
+    it "should respond with a 404 when provided with a blank address" do
+      post "/accounts/0xbb3e1a9b1a5e86503f4766500153f75ed0870d45"
+      expect(last_response.not_found?).to be true
     end
   end
 end
