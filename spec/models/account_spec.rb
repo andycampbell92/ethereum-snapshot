@@ -23,5 +23,10 @@ describe "accounts model" do
       expect(Account.validate_address(incorrect_len)).to be nil
     end
 
+    it "Should return nil if address provided is 41 chars long" do
+      incorrect_len = "02b9c4e2ad6f1e7bd43365abb99faa1867706ea9c"
+      expect(Account.validate_address(incorrect_len)).to be nil
+    end
+
   end
 end
