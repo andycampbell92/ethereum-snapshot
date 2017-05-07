@@ -2,9 +2,9 @@
 An api that provides a snapshot of ethereum accounts
 
 ## Requirements
-`Docker
+Docker
 
-Docker Compose`
+Docker Compose
 
 ## Build & Run
 Start the container
