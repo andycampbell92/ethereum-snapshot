@@ -13,6 +13,10 @@ class EthereumSnapshot < Roda
         r.post do
           "#{address}"
         end
+
+        r.get do
+          "existing user  #{address}"
+        end
       end
     end
   end
