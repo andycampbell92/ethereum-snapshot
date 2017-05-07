@@ -20,6 +20,8 @@ describe "/accounts endpoint" do
     ]
 
     Account.multi_insert(@seeded_accounts)
+
+    @seeded_accounts.each {|account| account['ether'] = account['balance']/1000000000000000000.0}
   end
 
   describe "get /accounts" do
@@ -69,6 +71,7 @@ describe "/accounts endpoint" do
     end
   end
 
+  # TODO Mock response from etherchain.org use this to test for correct behaviour when there are connection errors
   describe "post /accounts/:address" do
     it "responds with ok when provided with valid address" do
       post "/accounts/0x2b9c4e2ad6f1e7bd43365abb99faa1867706ea9c"

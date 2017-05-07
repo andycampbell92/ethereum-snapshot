@@ -2,6 +2,10 @@ require_relative '../../enthereum_snapshot'
 require 'rspec'
 
 describe "accounts model" do
+  before(:each) do
+    DB[Account.table_name].delete
+  end
+  
   describe "self.validate_address" do
     it "should return a prefixed string of the valid address when passed a valid addresss with prefix" do
       prefixed_address = "0x2b9c4e2ad6f1e7bd43365abb99faa1867706ea9c"
@@ -27,6 +31,12 @@ describe "accounts model" do
       incorrect_len = "02b9c4e2ad6f1e7bd43365abb99faa1867706ea9c"
       expect(Account.validate_address(incorrect_len)).to be nil
     end
+  end
 
+  describe "ether_balance" do
+    it "should return a valid balance in ether for a created record" do
+      account = Account.create(address: "2b9c4e2ad6f1e7bd43365abb99faa1867706ea9c", balance: 43212349912)
+      expect(account.ether_balance).to eq 0.000000043212349912
+    end
   end
 end

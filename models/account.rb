@@ -10,4 +10,8 @@ class Account < Sequel::Model
       end
     end
   end
+
+  def ether_balance()
+    self.balance / 1000000000000000000.0
+  end
 end

@@ -12,7 +12,11 @@ class EthereumSnapshot < Roda
       whitelist = [:address, :balance]
       r.is do
         r.get do
-          Account.select(*whitelist).map {|o| o.values}
+          Account.select(*whitelist).map do |o| 
+            values = o.values
+            values['ether'] = o.ether_balance
+            values
+          end
         end
       end
 
@@ -24,7 +28,11 @@ class EthereumSnapshot < Roda
             response.status = 400
             {"message" => "The address provided was invalid"}
           else
-            found_accounts = Account.select(*whitelist).where(address: validated_address).limit(1).map {|o| o.values}
+            found_accounts = Account.select(*whitelist).where(address: validated_address).limit(1).map do |o|
+              values = o.values
+              values['ether'] = o.ether_balance
+              values
+            end
             if found_accounts.length == 0
               response.status = 404
               {"message" => "An account with that address was not found in cache"}
